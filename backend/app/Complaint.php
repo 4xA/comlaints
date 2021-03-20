@@ -22,8 +22,25 @@ class Complaint extends Model
         'urgent'
     ];
 
+    /**
+     * Append attributes to model
+     */
+    protected $appends = [
+        'tags'
+    ];
+
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function getTagsAttribute()
+    {
+        return $this->tags()->get();
     }
 }

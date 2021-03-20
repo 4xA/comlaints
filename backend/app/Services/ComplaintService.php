@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Complaint;
+use App\Tag;
 use Illuminate\Support\Facades\Validator;
 use InvalidArgumentException;
 
@@ -50,7 +51,8 @@ class ComplaintService
             'status' => 'required_without:id|in:pending,resolved,dismissed',
             'title' => 'required_without:id|string|min:3|max:255',
             'description' => 'nullable|min:3|max:65534',
-            'urgent' => 'nullable|boolean'
+            'urgent' => 'nullable|boolean',
+            'tags' => 'nullable|array'
         ]);
 
         if ($validator->fails()) {
@@ -66,6 +68,14 @@ class ComplaintService
         $complaint->fill($data);
 
         $complaint->save();
+
+        // typicaly this would be handled using a tag service but I am simplifying
+        if (array_key_exists('tags', $data)) {
+            foreach ($data['tags'] as $tagName) {
+                $tag = Tag::where('name', $tagName)->first();
+                $complaint->tags()->save($tag);
+            }
+        }
 
         return $complaint;
     }

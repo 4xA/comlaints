@@ -40,6 +40,6 @@ class User extends Authenticatable
 
     public function compalaints()
     {
-        $this->hasMany(Complaint::class);
+        return $this->hasMany(Complaint::class);
     } 
 }
