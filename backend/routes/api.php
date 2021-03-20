@@ -21,4 +21,10 @@ Route::group([
     Route::get('login', 'AuthController@login');
 
     Route::apiResource('user', 'UserController')->only(['store']);
+
+    Route::group([
+        'middleware' => 'auth:sanctum'
+    ], function () {
+        Route::apiResource('complaint', 'ComplaintController');
+    });
 });
