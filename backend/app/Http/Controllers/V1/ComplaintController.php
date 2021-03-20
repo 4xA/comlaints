@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\V1;
 
+use App\Complaint;
 use App\Http\Controllers\Controller;
 use App\Services\ComplaintService;
 use Exception;
@@ -28,6 +29,7 @@ class ComplaintController extends Controller
         $result = ['status' => 200];
 
         try {
+            $this->authorize('viewAny', Complaint::class);
             $result['data'] = $this->compliantService->getPaginatedComplaints($data);
         } catch (Exception $e) {
             $result = [
@@ -50,6 +52,7 @@ class ComplaintController extends Controller
         $result = ['status' => '201'];
 
         try {
+            $this->authorize('create', Complaint::class);
             $result['data'] = $this->compliantService->saveComplaintData($request->all());
         } catch (Exception $e) {
             $result = [
@@ -73,6 +76,7 @@ class ComplaintController extends Controller
 
         try {
             $data = $this->compliantService->getComplaintById($id);
+            $this->authorize('view', $data);
 
             if (is_null($data)) {
                 $result['status'] = '404';
@@ -101,6 +105,7 @@ class ComplaintController extends Controller
         $result = ['status' => '200'];
 
         try {
+            $this->authorize('create', Complaint::class);
             $data = $this->compliantService->saveComplaintData($request->all(), $id);
 
             if (is_null($data)) {
@@ -129,6 +134,7 @@ class ComplaintController extends Controller
         $result = ['status' => '204'];
 
         try {
+            $this->authorize('delete', Complaint::find($id));
             if (!$this->compliantService->deleteComplaintById($id)) {
                 $result = [
                     'status' => 404,

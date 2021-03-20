@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Complaint::class, function (Faker $faker) {
     return [
-        'user_id' => 1,
+        'user_id' => 2,
         'status' => 'pending',
         'title' => $faker->word,
         'description' => $faker->text,
