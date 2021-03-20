@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Complaint extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasSlug;
 
     /**
      * The attributes that are mass assignable.
@@ -42,5 +44,15 @@ class Complaint extends Model
     public function getTagsAttribute()
     {
         return $this->tags()->get();
+    }
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug');
     }
 }
