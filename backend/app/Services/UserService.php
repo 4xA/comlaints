@@ -31,6 +31,7 @@ class UserService
         $data['password'] = Hash::make($data['password']);
 
         $user = User::create($data);
+        $user->assignRole(['customer']);
 
         return $user;
     }

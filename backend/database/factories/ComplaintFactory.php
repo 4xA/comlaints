@@ -9,7 +9,7 @@ $factory->define(Complaint::class, function (Faker $faker) {
     return [
         'user_id' => 1,
         'status' => 'pending',
-        'title' => $faker->title,
+        'title' => $faker->word,
         'description' => $faker->text,
         'urgent' => $faker->boolean
     ];

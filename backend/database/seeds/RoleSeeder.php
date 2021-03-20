@@ -1,9 +1,9 @@
 <?php
 
-use App\Complaint;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
-class ComplaintSeeder extends Seeder
+class RoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,7 @@ class ComplaintSeeder extends Seeder
      */
     public function run()
     {
-        factory(Complaint::class, 10)->create();
+        Role::create(['name' => 'admin']);
+        Role::create(['name' => 'customer']);
     }
 }
