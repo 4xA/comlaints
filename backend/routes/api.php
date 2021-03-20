@@ -18,7 +18,7 @@ Route::group([
     'prefix' => 'v1',
     'namespace' => '\App\Http\Controllers\V1'
 ], function () {
-    Route::get('login', 'AuthController@login');
+    Route::post('login', 'AuthController@login');
 
     Route::apiResource('user', 'UserController')->only(['store']);
 
